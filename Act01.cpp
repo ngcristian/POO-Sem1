@@ -40,20 +40,34 @@ int pozitieMaxim(int* vector, int dim) {
 	}
 	return pozMaxim;
 }
-//De ce sunt doua stelute? (R: Prima pastreaza tipul de date din main, a doua arata ca transmite parametrul prin pointer)
-void stergereMaximDePePozitie(int** vector, int* dim, int pozitie) {
-	//Cand transmitem prin poiter trebuie sa-i fac dereferentiere adica extragem valoare de la adresa respectiva, facem prin * in fata)
-	int* vectorAux = new int[*dim - 1];
+////De ce sunt doua stelute? (R: Prima pastreaza tipul de date din main, a doua arata ca transmite parametrul prin pointer)
+//void stergereMaximDePePozitie(int** vector, int* dim, int pozitie) {
+//	//Cand transmitem prin poiter trebuie sa-i fac dereferentiere adica extragem valoare de la adresa respectiva, facem prin * in fata)
+//	int* vectorAux = new int[*dim - 1];
+//	int j = 0;
+//	for (int i = 0; i < *dim; i++) {
+//		if (i != pozitie) {
+//			vectorAux[j] = (*vector)[i];
+//			j++;
+//		}
+//	}
+//	delete[](*vector);
+//	(*dim)--;
+//	(*vector) = vectorAux;
+//}
+//Tema schimbam functia "stergereMaximDePePozitie" din transimeterea prin pointer in transmiterea prin referinta
+void stergereMaximDePePozitie(int*& vector, int& dim, int pozitie) {
+	int* vectorAux = new int[dim - 1];
 	int j = 0;
-	for (int i = 0; i < *dim; i++) {
+	for (int i = 0; i < dim; i++) {
 		if (i != pozitie) {
-			vectorAux[j] = (*vector)[i];
+			vectorAux[j] = (vector)[i];
 			j++;
 		}
 	}
-	delete[](*vector);
-	(*dim)--;
-	(*vector) = vectorAux;
+	delete[](vector);
+	dim--;
+	vector = vectorAux;
 }
 
 void main() {
@@ -99,8 +113,9 @@ void main() {
 
 	afisareVector(vector, dim);
 	cout << endl << "Pozitia pe care se afla maximul este: " << pozitieMaxim(vector, dim);
-	stergereMaximDePePozitie(&vector, &dim, 1);
+	stergereMaximDePePozitie(vector, dim, 1);
 	afisareVector(vector, dim);
 	delete[] vector;
-	//Tema schimbam functia "stergereMaximDePePozitie" din transimeterea prin pointer in transmiterea prin referinta
+	
+
 }
