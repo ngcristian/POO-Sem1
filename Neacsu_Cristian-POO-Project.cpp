@@ -13,6 +13,7 @@ private:
 	int countFans;
 	int* fanSizes;
 public:
+	//default
 	Computer() :idComputer(++countComputers) {
 		this->name = nullptr;
 		this->procesor = "Default";
@@ -32,6 +33,27 @@ public:
 		}
 		this->name = new char[strlen(name) + 1];
 		strcpy_s(this->name, strlen(name) + 1, name);
+	}
+	//copy
+	Computer(const Computer& copy):idComputer(++countComputers) {
+		this->procesor = copy.procesor;
+		this->buildYear = copy.buildYear;
+		this->price = copy.price;
+		this->countFans = copy.countFans;
+
+		if (copy.fanSizes != nullptr) {
+			this->fanSizes = new int[copy.countFans];
+			for (int i = 0; i < copy.countFans; i++) {
+				this->fanSizes[i] = copy.fanSizes[i];
+			}
+		}
+		else {
+			this->fanSizes = nullptr;
+		}
+		if (copy.name != nullptr) {
+			this->name = new char[strlen(copy.name) + 1];
+			strcpy_s(this->name, strlen(copy.name) + 1, copy.name);
+		}
 	}
 
 	void setName(const char* name) {
@@ -99,6 +121,9 @@ public:
 	int getIdComputer() {
 		return this->idComputer;
 	}
+	void setCountComputer(int numberComputers) {
+		countComputers = numberComputers;
+	}
 	void showComputer() {
 		cout << endl << this->getIdComputer()<<". The ";
 		if (this->getName() != nullptr) {
@@ -126,6 +151,9 @@ void main() {
 
 	Computer computer1("Dragon", "Intel i5-14400F", 2025, 1099.99, 3, sizes);
 
+	Computer computerCopy(computer1);
+
 	computerDefault.showComputer();
 	computer1.showComputer();
+	computerCopy.showComputer();
 }
