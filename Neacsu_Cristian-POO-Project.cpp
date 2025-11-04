@@ -116,7 +116,7 @@ public:
 		if (index >= 0 && index < countFans) {
 			return this->fanSizes[index];
 		}
-		throw "Out of bound exception";
+		throw "Error setup focal length";
 	}
 	int getIdComputer() {
 		return this->idComputer;
@@ -132,7 +132,7 @@ public:
 		else {
 			cout << "No name";
 		}
-		cout << " computer have " << this->getProcesor() << " processor, " << "buid in " << this->getBuildYear()
+		cout << " desktop computer have " << this->getProcesor() << " processor, " << "buid in " << this->getBuildYear()
 			<< " year, sold at " << this->getPrice() << "$. Comes with " << this->getCountFans() << " fans";
 		if(this->getCountFans() > 0) {
 			cout << " with the following sizes: ";
@@ -144,6 +144,108 @@ public:
 	}
 };
 int Computer::countComputers = 0;
+
+class Smartphone {
+
+private:
+	const int idSmartphone;
+	static int countSmartphones;
+	char* name;
+	string model;
+	int year;
+	float price;
+	int countCameras;
+	float* focalLength;
+
+public:
+	void setName(const char* name) {
+		if (strlen(name) > 0) {
+			if (this->name != nullptr) {
+				delete[]this->name;
+			}
+			this->name = new char[strlen(name) + 1];
+			strcpy_s(this->name, strlen(name) + 1, name);
+		}
+	}
+	char* getName() {
+		return this->name;
+	}
+	void setModel(string model) {
+		if (model.length() > 0) {
+			this->model = model;
+		}
+	}
+	string getModel() {
+		return this->model;
+	}
+	void setYear(int year) {
+		if (year > 0) {
+			this->year = year;
+		}
+	}
+	int getYear() {
+		return this->year;
+	}
+	void setPrice(float price) {
+		if (price > 0) {
+			this->price = price;
+		}
+	}
+	float getPrice() {
+		return this->price;
+	}
+	void setCountCameras(int countCameras) {
+		if (countCameras >= 0){
+		this->countCameras = countCameras;
+		}
+	}
+	int getCountCameras() {
+		return this->countCameras;
+	}
+	void setFocalLength(int countCameras, float* focalLength) {
+		if (countCameras > 0) {
+			this->countCameras = countCameras;
+			if (focalLength != nullptr) {
+				delete[]this->focalLength;
+			}
+			this->focalLength = new float[countCameras];
+			for (int i = 0; i < countCameras; i++) {
+				this->focalLength[i] = focalLength[i];
+			}
+			throw "Error setup focal length";
+		}
+	}
+	float getFocalLength(int index) {
+		if (index >= 0 && index < countCameras) {
+			return this->focalLength[index];
+		}
+	}
+	int getIdSmartphones() {
+		return this->idSmartphone;
+	}
+	void setCountSmartphones(int numberSmartphones) {
+		countSmartphones = numberSmartphones;
+	}
+	void showSmartphone() {
+		cout << endl << this->getIdSmartphones() << ". The ";
+		if (this->getName() != nullptr) {
+			cout << this->getName();
+		}
+		else {
+			cout << "No name";
+		}
+		cout << " smartphone, model " << this->getModel() <<
+			", year " << this->getYear() << ", sold at " << this->getPrice()
+			<< ". The smartphone have " << this->getCountCameras() << " cameras";
+		if (this->getCountCameras() > 0) {
+			for (int i = 0; i < this->getCountCameras() - 1; i++) {
+				cout << this->getFocalLength(i) << " mm, ";
+			}
+			cout << this->getFocalLength(this->countCameras - 1) << " mm.";
+		}
+	}
+};
+int Smartphone::countSmartphones = 0;
 void main() {
 	int* sizes = new int[3]{ 120,150,220 };
 
