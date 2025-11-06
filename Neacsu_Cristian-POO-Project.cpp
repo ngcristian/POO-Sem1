@@ -17,10 +17,12 @@ public:
 	Computer() :idComputer(++countComputers) {
 		this->name = nullptr;
 		this->procesor = "Default";
+		this->buildYear = 0;
 		this->price = 0.0;
 		this->countFans = 0;
 		this->fanSizes = nullptr;
 	}
+	//all
 	Computer(const char* name, string procesor, int buildYear, float price, int countFans, const int* fanSizes) :idComputer(++countComputers) {
 		this->procesor = procesor;
 		this->buildYear = buildYear;
@@ -53,6 +55,9 @@ public:
 		if (copy.name != nullptr) {
 			this->name = new char[strlen(copy.name) + 1];
 			strcpy_s(this->name, strlen(copy.name) + 1, copy.name);
+		}
+		else {
+			this->name = nullptr;
 		}
 	}
 
@@ -158,6 +163,55 @@ private:
 	float* focalLength;
 
 public:
+	//Default
+	Smartphone() :idSmartphone(++countSmartphones) {
+		this->name = nullptr;
+		this->model = "defaul";
+		this->year = 0;
+		this->price = 0.0;
+		this->countCameras = 0;
+		this->focalLength = nullptr;
+	}
+	//all
+	Smartphone(const char* name, string model, int year, float price, int countCameras,const float* focalLength) :idSmartphone(++countSmartphones) {
+		this->model = model;
+		this->year = year;
+		this->price = price;
+		this->countCameras = countCameras;
+
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
+
+		this->focalLength = new float[countCameras];
+		for (int i = 0; i < countCameras; i++) {
+			this->focalLength[i] = focalLength[i];
+		}
+	}
+	//copy
+	Smartphone(const Smartphone& copy) :idSmartphone(++countSmartphones) {
+		this->model = copy.model;
+		this->year = copy.year;
+		this->price = copy.price;
+		this->countCameras = copy.countCameras;
+
+		if (copy.name != nullptr) {
+			this->name = new char[strlen(copy.name) + 1];
+			strcpy_s(this->name, strlen(copy.name) + 1, copy.name);
+		}
+		else {
+			this->name = nullptr;
+		}
+		if (copy.focalLength != nullptr) {
+			this->focalLength = new float[copy.countCameras];
+			for (int i = 0; i < copy.countCameras; i++) {
+				this->focalLength[i] = copy.focalLength[i];
+			}
+		}
+		else {
+			this->focalLength = nullptr;
+		}
+	}
+
 	void setName(const char* name) {
 		if (strlen(name) > 0) {
 			if (this->name != nullptr) {
@@ -238,11 +292,13 @@ public:
 			", year " << this->getYear() << ", sold at " << this->getPrice()
 			<< ". The smartphone have " << this->getCountCameras() << " cameras";
 		if (this->getCountCameras() > 0) {
+			cout << " with the following focal lengths: ";
 			for (int i = 0; i < this->getCountCameras() - 1; i++) {
 				cout << this->getFocalLength(i) << " mm, ";
 			}
 			cout << this->getFocalLength(this->countCameras - 1) << " mm.";
 		}
+		cout << ".";
 	}
 };
 int Smartphone::countSmartphones = 0;
@@ -255,7 +311,22 @@ void main() {
 
 	Computer computerCopy(computer1);
 
+
 	computerDefault.showComputer();
 	computer1.showComputer();
 	computerCopy.showComputer();
+
+	cout << endl;
+
+	float* camSizes = new float[3]{12.5,24.0,35.0 };
+
+	Smartphone smartPhoneDefault;
+
+	Smartphone smartPhone1("Samsung", "S22", 2022, 799.99, 3, camSizes);
+
+	Smartphone smartCopy(smartPhone1);
+
+	smartPhoneDefault.showSmartphone();
+	smartPhone1.showSmartphone();
+	smartCopy.showSmartphone();
 }
