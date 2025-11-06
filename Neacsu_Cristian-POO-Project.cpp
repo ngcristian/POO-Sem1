@@ -147,6 +147,25 @@ public:
 			cout << this->getFanSizes(this->getCountFans() - 1) << " mm.";
 		}
 	}
+
+	friend void operator<<(ostream& out, Computer c) {
+		out << endl << "Id: " << c.idComputer;
+		out << endl << (c.name != nullptr ? "Name: " + string(c.name) : "No found");
+		out << endl << "Procesor: " << c.procesor;
+		out << endl << "Buld year: " << c.buildYear;
+		out << endl << "Price: " << c.price;
+		out << endl << "Number fans: " << c.countFans;
+		if (c.fanSizes != nullptr) {
+			out << endl << "Fan sizes: ";
+			for (int i = 0; i < c.countFans - 1; i++) {
+				out << c.fanSizes[i]<<" mm, ";
+			}
+			out << c.getFanSizes(c.countFans - 1) << " mm.";
+		}
+		else {
+			out << endl << "No fans";
+		}
+	}
 };
 int Computer::countComputers = 0;
 
@@ -300,6 +319,25 @@ public:
 		}
 		cout << ".";
 	}
+
+	friend void operator<<(ostream& out, Smartphone s) {
+		out << endl << "Id: " << s.idSmartphone;
+		out << endl << (s.name != nullptr ? "Name: " + string(s.name) : "No found");
+		out << endl << "Model: " << s.model;
+		out << endl << "Year: " << s.year;
+		out << endl << "Price: " << s.price;
+		out << endl << "Number cameras: " << s.countCameras;
+		if (s.focalLength != nullptr) {
+			out << endl << "Focal lengths: ";
+			for (int i = 0; i < s.countCameras - 1; i++) {
+				out << s.focalLength[i] << " mm, ";
+			}
+			out << s.getFocalLength(s.countCameras - 1)<<" mm.";
+		}
+		else {
+			out << endl << "No cameras.";
+		}
+	}
 };
 int Smartphone::countSmartphones = 0;
 void main() {
@@ -316,6 +354,8 @@ void main() {
 	computer1.showComputer();
 	computerCopy.showComputer();
 
+	cout << computer1;
+
 	cout << endl;
 
 	float* camSizes = new float[3]{12.5,24.0,35.0 };
@@ -329,4 +369,6 @@ void main() {
 	smartPhoneDefault.showSmartphone();
 	smartPhone1.showSmartphone();
 	smartCopy.showSmartphone();
+
+	cout << smartPhone1;
 }
