@@ -67,7 +67,7 @@ public:
 				delete[]this->name;
 			}
 			this->name = new char[strlen(name) + 1];
-			strcpy_s(this->name,strlen(name)+1, name);
+			strcpy_s(this->name, strlen(name) + 1, name);
 		}
 	}
 	char* getName() {
@@ -121,7 +121,7 @@ public:
 		if (index >= 0 && index < countFans) {
 			return this->fanSizes[index];
 		}
-		throw "Error setup focal length";
+		throw "Error setup fan sizes";
 	}
 	int getIdComputer() {
 		return this->idComputer;
@@ -340,6 +340,126 @@ public:
 	}
 };
 int Smartphone::countSmartphones = 0;
+
+class Laptop {
+private:
+	const int idLaptop;
+	static int countLaptop;
+	char* name;
+	float price;
+	int memoryNumber;
+	int* memorySizes;
+
+public:
+	//Default
+	Laptop():idLaptop(++countLaptop) {
+		this->name = nullptr;
+		this->price = 0.0;
+		this->memoryNumber = 0;
+		this->memorySizes = nullptr;
+	}
+	//All
+	Laptop(const char* name, float price, int memoryNumber, const int* memorySizes) :idLaptop(++countLaptop) {
+		this->price = price;
+		this->memoryNumber = memoryNumber;
+		
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
+
+		this->memorySizes = new int[memoryNumber];
+		for (int i = 0; i < memoryNumber; i++) {
+			this->memorySizes[i] = memorySizes[i];
+		}
+	}
+	//Copy
+	Laptop(const Laptop& copy) :idLaptop(++countLaptop) {
+		if (copy.name != nullptr) {
+			this->name = new char[strlen(copy.name) + 1];
+			strcpy_s(this->name, strlen(copy.name) + 1, copy.name);
+		}
+		else {
+			this->name = nullptr;
+		}
+		if (copy.memorySizes != nullptr) {
+			this->memorySizes = new int[copy.memoryNumber];
+			for (int i = 0; i < copy.memoryNumber; i++) {
+				this->memorySizes[i] = copy.memorySizes[i];
+			}
+		}
+		else {
+			this->memorySizes = nullptr;
+		}
+		this->price = copy.price;
+		this->memoryNumber = copy.memoryNumber;
+	}
+
+	void setName(const char* name) {
+		if (strlen(name) > 0) {
+			if (this->name != nullptr) {
+				delete[]this->name;
+			}
+			this->name = new char[strlen(name) + 1];
+			strcpy_s(this->name, strlen(name) + 1, name);
+		}
+	}
+	char* getName() {
+		return this->name;
+	}
+	void setPrice(float price) {
+		if (price > 0) {
+			this->price = price;
+		}
+	}
+	float getPrice() {
+		return this->price;
+	}
+	void setMemoryNumber(int memoryNumber) {
+		if (memoryNumber > 0) {
+			this->memoryNumber = memoryNumber;
+		}
+	}
+	int getMemoryNumber() {
+		return this->memoryNumber;
+	}
+	void setMemorySizes(int memoryNumber, int* memorySizes) {
+		if (memoryNumber > 0) {
+			this->memoryNumber = memoryNumber;
+			if (this->memorySizes != nullptr) {
+				delete[]this->memorySizes;
+			}
+			this->memorySizes = new int[memoryNumber];
+			for (int i = 0; i < memoryNumber; i++) {
+				this->memorySizes[i] = memorySizes[i];
+			}
+		}
+	}
+	int getMemorySize(int index) {
+		if (index >= 0 && index < memoryNumber) {
+			return this->memorySizes[index];
+		}
+		throw "Error setup memory sizes";
+	}
+
+	friend void operator<<(ostream& out, Laptop l) {
+		out << endl << "Id: " << l.idLaptop;
+		out << endl << (l.name != nullptr ? "Name: " + string(l.name) : "No found");
+		out << endl << "Price: " << l.price;
+		out << endl << "Number of memory: " << l.memoryNumber;
+		if (l.memorySizes != nullptr) {
+			out << endl << "Memory sizes: ";
+			for (int i = 0; i < l.memoryNumber - 1; i++) {
+				out << l.memorySizes[i] << " Gb, ";
+			}
+			out << l.getMemorySize(l.memoryNumber - 1) << " Gb.";
+		}
+		else {
+			out << endl << "No memory";
+		}
+	}
+
+};
+int Laptop::countLaptop = 0;
+
 void main() {
 	int* sizes = new int[3]{ 120,150,220 };
 
@@ -355,8 +475,8 @@ void main() {
 	computerCopy.showComputer();
 
 	cout << computer1;
-
 	cout << endl;
+	
 
 	float* camSizes = new float[3]{12.5,24.0,35.0 };
 
@@ -371,4 +491,17 @@ void main() {
 	smartCopy.showSmartphone();
 
 	cout << smartPhone1;
+	cout << endl;
+
+	int* memorySizes = new int[4]{ 4,8,16,32};
+
+	Laptop laptopDefault;
+	Laptop laptop1("Legion", 1499.99, 4, memorySizes);
+	Laptop laptopCopy(laptop1);
+
+
+	cout << laptopDefault;
+	cout << laptop1;
+	cout << laptopCopy;
+
 }
