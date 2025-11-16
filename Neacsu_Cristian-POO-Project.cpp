@@ -147,7 +147,36 @@ public:
 			cout << this->getFanSizes(this->getCountFans() - 1) << " mm.";
 		}
 	}
-
+	void operator=(const Computer& copy) {
+		this->procesor = copy.procesor;
+		this->buildYear = copy.buildYear;
+		this->price = copy.price;
+		this->countFans = copy.countFans;
+		if (this->name != nullptr) {
+			delete[]this->name;
+			this->name = nullptr;
+		}
+		if (copy.name != nullptr) {
+			this->name = new char[strlen(copy.name) + 1];
+			strcpy_s(this->name, strlen(copy.name) + 1, copy.name);
+		}
+		else {
+			this->name = nullptr;
+		}
+		if (this->fanSizes != nullptr) {
+			delete[]this->fanSizes;
+			this->fanSizes = nullptr;
+		}
+		if (copy.fanSizes != nullptr) {
+			this->fanSizes = new int[copy.countFans];
+			for (int i = 0; i < copy.countFans; i++) {
+				this->fanSizes[i] = copy.fanSizes[i];
+			}
+		}
+		else {
+			this->fanSizes = nullptr;
+		}
+	}
 	friend void operator<<(ostream& out, Computer c) {
 		out << endl << "Id: " << c.idComputer;
 		out << endl << (c.name != nullptr ? "Name: " + string(c.name) : "No found");
@@ -320,6 +349,38 @@ public:
 		cout << ".";
 	}
 
+	void operator=(const Smartphone& copy) {
+		this->model = copy.model;
+		this->year = copy.year;
+		this->price = copy.price;
+		this->countCameras = copy.countCameras;
+
+		if (this->name != nullptr) {
+			delete[]this->name;
+			this->name = nullptr;
+		}
+		if (copy.name != nullptr) {
+			this->name = new char[strlen(copy.name) + 1];
+			strcpy_s(this->name, strlen(copy.name) + 1, copy.name);
+		}
+		else {
+			this->name = nullptr;
+		}
+		if (this->focalLength != nullptr) {
+			delete[]this->focalLength;
+			this->focalLength = nullptr;
+		}
+		if (copy.focalLength != nullptr) {
+			this->focalLength = new float[copy.countCameras];
+			for (int i = 0; i < copy.countCameras; i++) {
+				this->focalLength[i] = copy.focalLength[i];
+			}
+		}
+		else {
+			this->focalLength = nullptr;
+		}
+	}
+
 	friend void operator<<(ostream& out, Smartphone s) {
 		out << endl << "Id: " << s.idSmartphone;
 		out << endl << (s.name != nullptr ? "Name: " + string(s.name) : "No found");
@@ -439,7 +500,35 @@ public:
 		}
 		throw "Error setup memory sizes";
 	}
+	void operator=(const Laptop& copy) {
+		this->price = copy.price;
+		this->memoryNumber = copy.memoryNumber;
 
+		if (this->name != nullptr) {
+			delete[]this->name;
+			this->name = nullptr;
+		}
+		if (copy.name != nullptr) {
+			this->name = new char[strlen(copy.name) + 1];
+			strcpy_s(this->name, strlen(copy.name) + 1, copy.name);
+		}
+		else {
+			this->name = nullptr;
+		}
+		if (this->memorySizes != nullptr) {
+			delete[]this->memorySizes;
+			this->memorySizes = nullptr;
+		}
+		if (copy.memorySizes != nullptr) {
+			this->memorySizes = new int[copy.memoryNumber];
+			for (int i = 0; i < copy.memoryNumber; i++) {
+				this->memorySizes[i] = copy.memorySizes[i];
+			}
+		}
+		else {
+			this->memorySizes = nullptr;
+		}
+	}
 	friend void operator<<(ostream& out, Laptop l) {
 		out << endl << "Id: " << l.idLaptop;
 		out << endl << (l.name != nullptr ? "Name: " + string(l.name) : "No found");
@@ -475,7 +564,13 @@ void main() {
 	computerCopy.showComputer();
 
 	cout << computer1;
-	cout << endl;
+
+	computerDefault = computer1;
+
+	cout << endl << computerDefault;
+
+	cout << endl<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+
 	
 
 	float* camSizes = new float[3]{12.5,24.0,35.0 };
@@ -491,7 +586,12 @@ void main() {
 	smartCopy.showSmartphone();
 
 	cout << smartPhone1;
-	cout << endl;
+
+	smartPhoneDefault = smartPhone1;
+
+	cout << endl << smartPhoneDefault;
+
+	cout << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
 	int* memorySizes = new int[4]{ 4,8,16,32};
 
@@ -503,5 +603,9 @@ void main() {
 	cout << laptopDefault;
 	cout << laptop1;
 	cout << laptopCopy;
+
+	laptopDefault = laptop1;
+
+	cout << endl << laptopDefault;
 
 }
