@@ -177,6 +177,10 @@ public:
 			this->fanSizes = nullptr;
 		}
 	}
+	void operator+=(float addToPrice) {
+		this->price += addToPrice;
+	}
+
 	friend void operator<<(ostream& out, Computer c) {
 		out << endl << "Id: " << c.idComputer;
 		out << endl << (c.name != nullptr ? "Name: " + string(c.name) : "No found");
@@ -380,7 +384,9 @@ public:
 			this->focalLength = nullptr;
 		}
 	}
-
+	void operator+=(float addToPrice) {
+		this->price += addToPrice;
+	}
 	friend void operator<<(ostream& out, Smartphone s) {
 		out << endl << "Id: " << s.idSmartphone;
 		out << endl << (s.name != nullptr ? "Name: " + string(s.name) : "No found");
@@ -529,6 +535,9 @@ public:
 			this->memorySizes = nullptr;
 		}
 	}
+	void operator+=(float addToPrice) {
+		this->price += addToPrice;
+	}
 	friend void operator<<(ostream& out, Laptop l) {
 		out << endl << "Id: " << l.idLaptop;
 		out << endl << (l.name != nullptr ? "Name: " + string(l.name) : "No found");
@@ -545,7 +554,6 @@ public:
 			out << endl << "No memory";
 		}
 	}
-
 };
 int Laptop::countLaptop = 0;
 
@@ -566,6 +574,7 @@ void main() {
 	cout << computer1;
 
 	computerDefault = computer1;
+	computerDefault += 100.00;
 
 	cout << endl << computerDefault;
 
@@ -588,6 +597,7 @@ void main() {
 	cout << smartPhone1;
 
 	smartPhoneDefault = smartPhone1;
+	smartPhoneDefault += 100;
 
 	cout << endl << smartPhoneDefault;
 
@@ -605,6 +615,7 @@ void main() {
 	cout << laptopCopy;
 
 	laptopDefault = laptop1;
+	laptopDefault += 100;
 
 	cout << endl << laptopDefault;
 
