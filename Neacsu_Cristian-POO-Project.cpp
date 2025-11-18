@@ -201,7 +201,37 @@ public:
 			out << endl << "No fans";
 		}
 	}
+	friend void operator>>(istream& in, Computer& c);
 };
+void operator>>(istream& in, Computer& c) {
+	cout << endl << "Name: ";
+	if (c.name != nullptr) {
+		delete[]c.name;
+		c.name = nullptr;
+	}
+	char buffer[20];
+	in >> buffer;
+	c.name = new char[strlen(buffer) + 1];
+	strcpy_s(c.name, strlen(buffer) + 1, buffer);
+	cout << endl << "Procesor: ";
+	in >> c.procesor;
+	cout << endl << "Buld year: ";
+	in >> c.buildYear;
+	cout << endl << "Price: ";
+	in >> c.price;
+	cout << endl << "Number fans: ";
+	in >> c.countFans;
+	cout << endl << "Fan sizes: ";
+	if (c.fanSizes != nullptr) {
+		delete[]c.fanSizes;
+		c.fanSizes = nullptr;
+	}
+	c.fanSizes = new int[c.countFans];
+	for (int i = 0; i < c.countFans; i++) {
+		cout << endl << "Size[" << i << "]: ";
+		in >> c.fanSizes[i];
+	}
+}
 int Computer::countComputers = 0;
 
 class Smartphone {
@@ -409,8 +439,37 @@ public:
 		else {
 			out << endl << "No cameras.";
 		}
-	}
+	}friend void operator>>(istream& in, Smartphone& s);
 };
+void operator>>(istream& in, Smartphone& s) {
+	cout << endl << "Name: ";
+	if (s.name != nullptr) {
+		delete[]s.name;
+		s.name = nullptr;
+	}
+	char buffer[20];
+	in >> buffer;
+	s.name = new char[strlen(buffer) + 1];
+	strcpy_s(s.name, strlen(buffer) + 1, buffer);
+	cout << endl << "Model: ";
+	in >> s.model;
+	cout << endl << "Year: ";
+	in >> s.year;
+	cout << endl << "Price: ";
+	in >> s.price;
+	cout << endl << "Number cameras: ";
+	in >> s.countCameras;
+	cout << endl << "Focal lengths: ";
+	if (s.focalLength != nullptr) {
+		delete[]s.focalLength;
+		s.focalLength = nullptr;
+	}
+	s.focalLength = new float[s.countCameras];
+	for (int i = 0; i < s.countCameras; i++) {
+		cout << endl << "Size[" << i << "]: ";
+		in >> s.focalLength[i];
+	}
+}
 int Smartphone::countSmartphones = 0;
 
 class Laptop {
@@ -562,7 +621,33 @@ public:
 			out << endl << "No memory";
 		}
 	}
+	friend void operator>>(istream& in, Laptop& l);
 };
+void operator>>(istream& in, Laptop& l) {
+	cout << endl << "Name: ";
+	if(l.name != nullptr){
+		delete[]l.name;
+		l.name = nullptr;
+	}
+	char buffer[20];
+	in >> buffer;
+	l.name = new char[strlen(buffer) + 1];
+	strcpy_s(l.name, strlen(buffer) + 1, buffer);
+	cout << endl << "Price: ";
+	in >> l.price;
+	cout << endl << "Number of memory: ";
+	in >> l.memoryNumber;
+	cout << endl << "Memory sizes: ";
+	if (l.memorySizes != nullptr) {
+		delete[]l.memorySizes;
+		l.memorySizes = nullptr;
+	}
+	l.memorySizes = new int[l.memoryNumber];
+	for (int i = 0; i < l.memoryNumber; i++) {
+		cout << endl << "Memory[" << i << "]: ";
+		in >> l.memorySizes[i];
+	}
+}
 int Laptop::countLaptop = 0;
 
 void main() {
@@ -573,6 +658,8 @@ void main() {
 	Computer computer1("Dragon", "Intel i5-14400F", 2025, 1099.99, 3, sizes);
 
 	Computer computerCopy(computer1);
+
+	Computer computer2;
 
 
 	computerDefault.showComputer();
@@ -593,6 +680,9 @@ void main() {
 		cout << endl << "Second computer is cheaper then the first computer";
 	}
 
+	cin >> computer2;
+	cout << computer2;
+
 	cout << endl<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
 	
@@ -604,6 +694,8 @@ void main() {
 	Smartphone smartPhone1("Samsung", "S22", 2022, 799.99, 3, camSizes);
 
 	Smartphone smartCopy(smartPhone1);
+
+	Smartphone smartPhone2;
 
 	smartPhoneDefault.showSmartphone();
 	smartPhone1.showSmartphone();
@@ -622,7 +714,8 @@ void main() {
 	else {
 		cout << endl << "Second smartphone is cheaper then the first smartphone";
 	}
-
+	cin >> smartPhone2;
+	cout << smartPhone2;
 	cout << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
 	int* memorySizes = new int[4]{ 4,8,16,32};
@@ -630,7 +723,7 @@ void main() {
 	Laptop laptopDefault;
 	Laptop laptop1("Legion", 1499.99, 4, memorySizes);
 	Laptop laptopCopy(laptop1);
-
+	Laptop laptop2;
 
 	cout << laptopDefault;
 	cout << laptop1;
@@ -647,4 +740,6 @@ void main() {
 	else {
 		cout << endl << "Second laptop is cheaper then the first laptop";
 	}
+	cin >> laptop2;
+	cout << laptop2;
 }
