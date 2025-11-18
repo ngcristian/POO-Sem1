@@ -180,7 +180,9 @@ public:
 	void operator+=(float addToPrice) {
 		this->price += addToPrice;
 	}
-
+	bool operator<(const Computer& c) {
+		return this->price < c.price;
+	}
 	friend void operator<<(ostream& out, Computer c) {
 		out << endl << "Id: " << c.idComputer;
 		out << endl << (c.name != nullptr ? "Name: " + string(c.name) : "No found");
@@ -387,6 +389,9 @@ public:
 	void operator+=(float addToPrice) {
 		this->price += addToPrice;
 	}
+	bool operator<(const Smartphone& s) {
+		return this->price < s.price;
+	}
 	friend void operator<<(ostream& out, Smartphone s) {
 		out << endl << "Id: " << s.idSmartphone;
 		out << endl << (s.name != nullptr ? "Name: " + string(s.name) : "No found");
@@ -538,6 +543,9 @@ public:
 	void operator+=(float addToPrice) {
 		this->price += addToPrice;
 	}
+	bool operator<(const Laptop l) {
+		return this->price < l.price;
+	}
 	friend void operator<<(ostream& out, Laptop l) {
 		out << endl << "Id: " << l.idLaptop;
 		out << endl << (l.name != nullptr ? "Name: " + string(l.name) : "No found");
@@ -577,6 +585,13 @@ void main() {
 	computerDefault += 100.00;
 
 	cout << endl << computerDefault;
+	cout << endl;
+	if (computer1 < computerDefault) {
+		cout << endl << "Fist computer is cheaper then the second computer";
+	}
+	else {
+		cout << endl << "Second computer is cheaper then the first computer";
+	}
 
 	cout << endl<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
@@ -600,6 +615,13 @@ void main() {
 	smartPhoneDefault += 100;
 
 	cout << endl << smartPhoneDefault;
+	cout << endl;
+	if (smartPhoneDefault < smartPhone1) {
+		cout << endl << "Fist smartphone is cheaper then the second smartphone";
+	}
+	else {
+		cout << endl << "Second smartphone is cheaper then the first smartphone";
+	}
 
 	cout << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
@@ -618,5 +640,11 @@ void main() {
 	laptopDefault += 100;
 
 	cout << endl << laptopDefault;
-
+	cout << endl;
+	if (laptopCopy< laptopDefault) {
+		cout << endl << "Fist laptop is cheaper then the second laptop";
+	}
+	else {
+		cout << endl << "Second laptop is cheaper then the first laptop";
+	}
 }
