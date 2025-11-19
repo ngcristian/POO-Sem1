@@ -183,6 +183,22 @@ public:
 	bool operator<(const Computer& c) {
 		return this->price < c.price;
 	}
+	char& operator[](int index) {
+		if (index >= 0 && index < strlen(this->name)) {
+			return this->name[index];
+		}
+		else {
+			throw "Index out of bound error";
+		}
+	}
+	explicit operator int() {
+		return this->price;
+	}
+	Computer operator++(int) {
+		Computer copy = *this;
+		this->buildYear++;
+		return copy;
+	}
 	friend void operator<<(ostream& out, Computer c) {
 		out << endl << "Id: " << c.idComputer;
 		out << endl << (c.name != nullptr ? "Name: " + string(c.name) : "No found");
@@ -422,6 +438,26 @@ public:
 	bool operator<(const Smartphone& s) {
 		return this->price < s.price;
 	}
+	char& operator[](int index) {
+		if (index >= 0 && index < strlen(this->name)) {
+			return this->name[index];
+		}
+		else {
+			throw "Index out of bound error";
+		}
+	}
+	explicit operator int() {
+		return this->price;
+	}
+	Smartphone operator++(int) {
+		Smartphone copy = *this;
+		this->year++;
+		return copy;
+	}
+	Smartphone operator++() {
+		this->year++;
+		return *this;
+	}
 	friend void operator<<(ostream& out, Smartphone s) {
 		out << endl << "Id: " << s.idSmartphone;
 		out << endl << (s.name != nullptr ? "Name: " + string(s.name) : "No found");
@@ -439,7 +475,8 @@ public:
 		else {
 			out << endl << "No cameras.";
 		}
-	}friend void operator>>(istream& in, Smartphone& s);
+	}
+	friend void operator>>(istream& in, Smartphone& s);
 };
 void operator>>(istream& in, Smartphone& s) {
 	cout << endl << "Name: ";
@@ -605,6 +642,17 @@ public:
 	bool operator<(const Laptop l) {
 		return this->price < l.price;
 	}
+	char& operator[](int index) {
+		if (index >= 0 && index < strlen(this->name)) {
+			return this->name[index];
+		}
+		else {
+			throw "Index out of bound error";
+		}
+	}
+	explicit operator int() {
+		return this->price;
+	}
 	friend void operator<<(ostream& out, Laptop l) {
 		out << endl << "Id: " << l.idLaptop;
 		out << endl << (l.name != nullptr ? "Name: " + string(l.name) : "No found");
@@ -680,6 +728,13 @@ void main() {
 		cout << endl << "Second computer is cheaper then the first computer";
 	}
 
+	cout << endl << "Name starts with letter: " << computer1[0];
+
+	cout << endl << "Cast: " << (int)computer1;
+
+	Computer c1 = computer1++;
+	cout << c1;
+
 	cin >> computer2;
 	cout << computer2;
 
@@ -714,6 +769,16 @@ void main() {
 	else {
 		cout << endl << "Second smartphone is cheaper then the first smartphone";
 	}
+
+	cout << endl << "Name starts with letter: " << smartPhone1[0];
+
+	cout << endl << "Cast: " << (int)smartPhone1;
+
+	Smartphone s1 = smartPhone1++;
+	cout << s1;
+	Smartphone s2 = ++smartPhone1;
+	cout << s2;
+
 	cin >> smartPhone2;
 	cout << smartPhone2;
 	cout << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
@@ -740,6 +805,11 @@ void main() {
 	else {
 		cout << endl << "Second laptop is cheaper then the first laptop";
 	}
+
+	cout << endl << "Name starts with letter: " << laptop1[0];
+
+	cout << endl << "Cast: " << (int)laptop1;
+
 	cin >> laptop2;
 	cout << laptop2;
 }
