@@ -60,7 +60,15 @@ public:
 			this->name = nullptr;
 		}
 	}
-
+	//Destructor
+	~Computer() {
+		if (this->name != nullptr) {
+			delete[]this->name;
+		}
+		if (this->fanSizes != nullptr) {
+			delete[]this->fanSizes;
+		}
+	}
 	void setName(const char* name) {
 		if (strlen(name) > 0) {
 			if (this->name != nullptr) {
@@ -121,7 +129,9 @@ public:
 		if (index >= 0 && index < countFans) {
 			return this->fanSizes[index];
 		}
-		throw "Error setup fan sizes";
+		else {
+			throw "Error setup fan sizes";
+		}
 	}
 	int getIdComputer() {
 		return this->idComputer;
@@ -311,7 +321,15 @@ public:
 			this->focalLength = nullptr;
 		}
 	}
-
+	//Desstructor
+	~Smartphone() {
+		if (this->name != nullptr) {
+			delete[]this->name;
+		}
+		if (this->focalLength != nullptr) {
+			delete[]this->focalLength;
+		}
+	}
 	void setName(const char* name) {
 		if (strlen(name) > 0) {
 			if (this->name != nullptr) {
@@ -560,7 +578,15 @@ public:
 		this->price = copy.price;
 		this->memoryNumber = copy.memoryNumber;
 	}
-
+	//Destructor
+	~Laptop() {
+		if (this->name != nullptr) {
+			delete[]this->name;
+		}
+		if (this->memorySizes != nullptr) {
+			delete[]this->memorySizes;
+		}
+	}
 	void setName(const char* name) {
 		if (strlen(name) > 0) {
 			if (this->name != nullptr) {
